@@ -34,7 +34,8 @@ plt.xticks(np.arange(0.0, 0.0005, step=0.0001))
 plt.show()
 
 rxvalle = popt[0] - ra
-print("rx valle = ", round(rxvalle, 1))
+erxvalle = ex + era
+print("rx valle = " + str(round(rxvalle, 1)) + "+/-" + str(round(erxvalle, 1)))
 
 # Adesso facciamo lo stesso lavoro con la configurazione a monte
 ddpmanomonte = [0.04, 0.09, 0.14, 0.2, 0.24, 0.3, 0.34, 0.4, 0.44, 0.5, 0.54, 0.6, 0.64, 0.68, 0.74, 0.79, 0.84, 0.88]
@@ -55,7 +56,8 @@ plt.ylabel("Differenza di potenziale")
 plt.show()
 
 rxmonte = (popt2[0] * rv) / (rv - popt2[0])
-print("rx monte = ", round(rxmonte, 1))
+erxmonte = ((rv*rv)*ex2)/(pow((rv+popt2[0]), 2))  # Tramite derivate parziali
+print("rx monte = " + str(round(rxmonte, 1)) + "+/-" + str(round(erxmonte, 1)))
 
 # grafico unificato
 plt.errorbar(ncorrmano, ddpmano, fmt="o", xerr=deltacorr, yerr=deltavolt, markersize=2)

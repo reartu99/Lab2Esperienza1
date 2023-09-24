@@ -56,7 +56,7 @@ plt.ylabel("Differenza di potenziale")
 plt.show()
 
 rxmonte = (popt2[0] * rv) / (rv - popt2[0])
-erxmonte = ((rv*rv)*ex2)/(pow((rv+popt2[0]), 2))  # Tramite derivate parziali
+erxmonte = ((rv*rv)*ex2)/(pow((rv+popt2[0]), 2))  # Tramite derivate parziali, assumento Rv senza errore
 print("rx monte = " + str(round(rxmonte, 1)) + "+/-" + str(round(erxmonte, 1)))
 
 # grafico unificato
@@ -68,3 +68,7 @@ plt.plot(ncorrmano, line(ncorrmano, popt[0], popt[1]))
 plt.xlabel("Corrente")
 plt.ylabel("Differenza di potenziale")
 plt.show()
+
+
+Testdiconsistenza = abs(rxvalle-rxmonte)/np.sqrt(pow(erxmonte, 2) + pow(erxvalle, 2))
+print("Il valore del test di consistenza è: " + str(round(Testdiconsistenza, 1)))

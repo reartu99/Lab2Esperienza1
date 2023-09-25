@@ -95,4 +95,4 @@ print("Stima di R con media pesata: ", str(round(sommapesata, 1)),
 print("Test di consistenza tra la media pesata e la misura trovata multimetro digitale :"
       , tdc(sommapesata, 2184.0, ersommapesata, 8.432))
 
-# ciao Arturo
+#ciao Marco

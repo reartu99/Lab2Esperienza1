@@ -70,5 +70,12 @@ plt.ylabel("Differenza di potenziale")
 plt.show()
 
 
-Testdiconsistenza = abs(rxvalle-rxmonte)/np.sqrt(pow(erxmonte, 2) + pow(erxvalle, 2))
-print("Il valore del test di consistenza è: " + str(round(Testdiconsistenza, 1)))
+TDC_valle_monte = abs(rxvalle - rxmonte) / np.sqrt(pow(erxmonte, 2) + pow(erxvalle, 2))
+print("Il valore del test di consistenza tra rx di valle e monte è: " + str(round(TDC_valle_monte, 1)))
+
+Pesovalle = 1/(pow(erxvalle, 2))
+Pesomonte = 1/(pow(erxmonte, 2))
+print("Stima di R con media pesata: ", str(round((Pesovalle*rxvalle + Pesomonte*rxmonte)/(Pesomonte+Pesovalle), 1)),
+      "+/-" + "Non so come fare questa incertezza ):")
+
+# Devo ricordare quali valori abbiamo ottenuto dal tester digitale per rx e fare il test di ipotesi

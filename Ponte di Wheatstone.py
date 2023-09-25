@@ -7,6 +7,10 @@ def line(x, a, b):
     return a * np.array(x) + b
 
 
+def tdc(x1, y1, ex1, ey1):
+    return abs(x1-y1)/np.sqrt((pow(ex1, 2) + pow(ey1, 2)))
+
+
 R2 = 120
 R1 = 220
 dR1 = 0
@@ -32,12 +36,16 @@ R3 = round(-popt[1]/popt[0])
 R4 = round(R2*R3/R1, 1)
 sigmaA, sigmaB = np.sqrt(np.diag(pcov))
 
-sigmaR3 = np.sqrt(1/pow(popt[0], 2)*sigmaB + pow(popt[1], 2)/pow(popt[0], 4)*sigmaA - 2*popt[1]/pow(popt[1], 3))
-# Manca cov(A,B) che non so come valutare
+sigmaR3 = np.sqrt(1/pow(popt[0], 2)*sigmaB + pow(popt[1], 2)/pow(popt[0], 4)*sigmaA -
+                  2*popt[1]/pow(popt[1], 3)*pcov[0][1])
+# Viene un risultato strano, un numero altissimo e non so perchè, forse ho sbagliato la formula
 sigmaR4 = R4*np.sqrt(pow(dR1/R1, 2) + pow(dR2/R2, 2) + pow(sigmaR3/R3, 2))
 # Gli errori dR1 e 2 non so proprio dove andarli a prendere, quelli del multimetro digitale forse?
-print(sigmaR3)
-print("La resistenza variabile (3) al punto richiesto quindi misura:", R3, "Omhs")
-print("La resistenza 4 al punto richiesto misura:", R4, "Omhs")
+print("La resistenza variabile (3) al punto richiesto quindi misura:", R3, "+/-", sigmaR3, "Omhs")
+print("La resistenza 4 al punto richiesto misura:", R4, "+/-", sigmaR4, "Omhs")
 
 # mancano solo i test di consistenza con i valopri del multimetro digitale.
+# Con il tester digitale abbiamo ottenuto 2184
+# pm 1.0% + 2 cifre trovato sul manuale del costruttore
+# Errore massimo con formula dall' ultima slide 21.8409
+# Per trasformarlo in errore relativo dicono le slide di dividerlo per 2.59 facendolo diventare 8.432

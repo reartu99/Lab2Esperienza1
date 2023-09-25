@@ -7,8 +7,13 @@ def line(x, a, b):
     return a * np.array(x) + b
 
 
-deltavolt = 0.02
-deltacorr = 0.000005
+def tdc(x1, y1, ex1, ey1):
+    return abs(x1-y1)/np.sqrt((pow(ex1, 2) + pow(ey1, 2)))
+
+
+deltavolt = 0.02   # Errore statistico ricavato come errore massimo/ rad 3
+deltacorr = 0.000006  # Errore statistico ricavato come errore massimo/ rad 3
+# Errore massimo trovato come grandezza di una tacca
 
 ddpmano = [0.06, 0.12, 0.2, 0.26, 0.32, 0.38, 0.44, 0.5, 0.56, 0.62, 0.68, 0.74, 0.8, 0.86, 0.92, 0.98, 1.04, 1.12]
 corrmano = [20, 40, 65, 85, 105, 130, 150, 175, 200, 220, 240, 265, 290, 310, 330, 355, 375, 400]
@@ -70,12 +75,22 @@ plt.ylabel("Differenza di potenziale")
 plt.show()
 
 
-TDC_valle_monte = abs(rxvalle - rxmonte) / np.sqrt(pow(erxmonte, 2) + pow(erxvalle, 2))
-print("Il valore del test di consistenza tra rx di valle e monte è: " + str(round(TDC_valle_monte, 1)))
+print("Il valore del test di consistenza tra rx di valle e monte è: " +
+      str(round(tdc(rxvalle, rxmonte, erxmonte, erxvalle), 1)))
 
+# Abbiamo trovato su internet che l'errore di una misura ricavata da una media pesata è la media pesata degli errori
+# http://ishtar.df.unibo.it/stat/avan/stat/medpesnota.html#err trovata a questo link
 Pesovalle = 1/(pow(erxvalle, 2))
 Pesomonte = 1/(pow(erxmonte, 2))
-print("Stima di R con media pesata: ", str(round((Pesovalle*rxvalle + Pesomonte*rxmonte)/(Pesomonte+Pesovalle), 1)),
-      "+/-" + "Non so come fare questa incertezza ):")
+sommapesata = (Pesovalle*rxvalle + Pesomonte*rxmonte)/(Pesomonte+Pesovalle)
+ersommapesata = np.sqrt(1/erxmonte + 1/erxvalle)
+print("Stima di R con media pesata: ", str(round(sommapesata, 1)),
+      "+/-" + str(round(ersommapesata, 1)))
 
-# Devo ricordare quali valori abbiamo ottenuto dal tester digitale per rx e fare il test di ipotesi
+# Con il tester digitale abbiamo ottenuto 2184
+# pm 1.0% + 2 cifre trovato sul manuale del costruttore
+# Errore massimo con formula dall' ultima slide 21.8409
+# Per trasformarlo in errore relativo dicono le slide di dividerlo per 2.59 facendolo diventare 8.432
+
+print("Test di consistenza tra la media pesata e la misura trovata multimetro digitale :"
+      , tdc(sommapesata, 2184.0, ersommapesata, 8.432))

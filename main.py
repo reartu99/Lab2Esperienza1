@@ -84,8 +84,7 @@ Pesovalle = 1/(pow(erxvalle, 2))
 Pesomonte = 1/(pow(erxmonte, 2))
 sommapesata = (Pesovalle*rxvalle + Pesomonte*rxmonte)/(Pesomonte+Pesovalle)
 ersommapesata = np.sqrt(1/erxmonte + 1/erxvalle)
-print("Stima di R con media pesata: ", str(round(sommapesata, 1)),
-      "+/-" + str(round(ersommapesata, 1)))
+print("Stima di R con media pesata: ", str(round(sommapesata, 1)), "+/-" + str(round(ersommapesata, 1)))
 
 # Con il tester digitale abbiamo ottenuto 2184
 # pm 1.0% + 2 cifre trovato sul manuale del costruttore

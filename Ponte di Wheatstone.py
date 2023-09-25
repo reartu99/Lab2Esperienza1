@@ -36,7 +36,7 @@ R3 = round(-popt[1]/popt[0])
 R4 = round(R2*R3/R1, 1)
 sigmaA, sigmaB = np.sqrt(np.diag(pcov))
 
-sigmaR3 = np.sqrt(1/pow(popt[0], 2)*sigmaB + pow(popt[1], 2)/pow(popt[0], 4)*sigmaA -
+sigmaR3 = np.sqrt(1/pow(popt[0], 2)*pow(sigmaB, 2) + pow(popt[1], 2)/pow(popt[0], 4)*pow(sigmaA, 2) -
                   2*popt[1]/pow(popt[1], 3)*pcov[0][1])
 # Viene un risultato strano, un numero altissimo e non so perchè, forse ho sbagliato la formula
 sigmaR4 = R4*np.sqrt(pow(dR1/R1, 2) + pow(dR2/R2, 2) + pow(sigmaR3/R3, 2))

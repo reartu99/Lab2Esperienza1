@@ -1,4 +1,6 @@
 import matplotlib.pyplot as plt
+
+import moduloanalisi
 import moduloanalisi as mm
 import numpy as np
 import scipy as sp
@@ -27,6 +29,15 @@ print(popt, pcov)
 plt.plot(Amperaggio, line(Amperaggio, popt[0], popt[1]))
 plt.show()
 
+# Con il valore misurato della resistenza
+R01 = 215.4  # Ohm
+Vt1 = 10  # Volt
+ER01 = moduloanalisi.incertezzadigitale(1.2, R01, 2, 0.1)
+
+TDC1 = moduloanalisi.tdc(R01, -1*popt[0], ER01, pcov[1][1])
+print(TDC1)
+
+# Con il valore nominale della resistenza
 
 Amperaggio2 = [23, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39, 42, 44, 47, 50]
 Amperaggio2 = np.array(Amperaggio2)*0.001

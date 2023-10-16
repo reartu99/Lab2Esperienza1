@@ -34,11 +34,17 @@ R01 = 215.4  # Ohm
 Vt1 = 10  # Volt
 ER01 = moduloanalisi.incertezzadigitale(1.2, R01, 2, 0.1)
 
-TDC1 = moduloanalisi.tdc(R01, -1*popt[0], ER01, pcov[1][1])
-print(TDC1)
+TDC11 = moduloanalisi.tdc(R01, -1*popt[0], ER01, pcov[1][1])
+print(TDC11)
 
 # Con il valore nominale della resistenza
+R01 = 220  # Ohm
+ER01 = 0.1*R01/np.sqrt(3)
 
+TDC22 = moduloanalisi.tdc(R01, -1*popt[0], ER01, pcov[1][1])
+print(TDC22)
+
+# Seconda parte primo punto
 Amperaggio2 = [23, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39, 42, 44, 47, 50]
 Amperaggio2 = np.array(Amperaggio2)*0.001
 Voltaggio2 = [4.9, 4.82, 4.73, 4.63, 4.53, 4.41, 4.29, 4.17, 4.02, 3.87, 3.7, 3.527, 3.325, 3.099, 2.847, 2.566,

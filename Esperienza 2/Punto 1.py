@@ -22,14 +22,18 @@ Voltaggio = [8.21, 8.05, 7.86, 7.64, 7.36, 7.0, 6.52, 5.87, 4.91, 3.363, 3.145, 
 ErrVolt = mm.incertezzadigitale(1, np.array(Voltaggio), 3, 0.001)
 # L'errore del voltaggio si calcola prendendo il massimo. Fondo scala = 50mA
 # Ogni tacca quindi vale 1mA e quindi divisa rad(3) viene 0.577
-EAmp = 0.6
+EAmp = 0.6*0.001  # Ampere
 
 popt, pcov = sp.optimize.curve_fit(line, Amperaggio, Voltaggio)
-plt.errorbar(Amperaggio, Voltaggio, EAmp, ErrVolt, fmt="o", markersize=4)
+plt.errorbar(Amperaggio, Voltaggio, ErrVolt, EAmp, fmt="o", markersize=2)
 print("I valori del fit per il primo punto sono: " + str(popt))
 print("La matrice di covarianza per il primo punto è: " + str(pcov))
 print("")
 plt.plot(Amperaggio, line(Amperaggio, popt[0], popt[1]))
+plt.ylabel("Vr (V)")
+plt.xlabel("Ir (A)")
+plt.legend(["Retta di fit lineare", "Punti misurati"])
+plt.grid()
 plt.show()
 
 # I valori predetti dal teorema di thevenin per il primo punto sono:
@@ -65,12 +69,16 @@ ErrVolt2 = mm.incertezzadigitale(1, np.array(Voltaggio2), 3, 0.001)
 # L'errore del voltaggio si calcola prendendo il massimo. Fondo scala = 50mA
 # Ogni tacca quindi vale 1mA e quindi divisa rad(3) viene 0.577
 popt2, pcov2 = sp.optimize.curve_fit(line, Amperaggio2, Voltaggio2)
-plt.errorbar(Amperaggio2, Voltaggio2, EAmp, ErrVolt2, fmt="o", markersize=4)
+plt.errorbar(Amperaggio2, Voltaggio2, ErrVolt2, EAmp, fmt="o", markersize=2)
 print("")
 print("I valori del fit per il secondo punto sono: " + str(popt2))
 print("La matrice di covarianza per il secondo punto è: " + str(pcov2))
 print("")
 plt.plot(Amperaggio2, line(Amperaggio2, popt2[0], popt2[1]))
+plt.ylabel("Vr (V)")
+plt.xlabel("Ir (A)")
+plt.legend(["Retta di fit lineare", "Punti misurati"])
+plt.grid()
 plt.show()
 
 # I valori predetti dal teorema di Thevenin per la seconda parte sono
@@ -80,7 +88,7 @@ Evt = 1/2*Ev0
 R0 = 2200*2200/4400
 ER0 = np.sqrt(np.power(1100*Er, 2))
 
-# TDC tra valore misurato e predetto da Thevenin
+# TDC tra valore misurato e predetto da Thevenin voltaggio
 TDC31 = moduloanalisi.tdc(popt2[0], pcov[0][0], Vt, Evt)
 print("Il valore dato dal tdc con il valore misurato e quello di Thevenin per il voltaggio è: " + str(TDC31))
 

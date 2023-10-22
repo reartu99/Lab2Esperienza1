@@ -13,7 +13,7 @@ def line(x, a, b):
     return a * np.array(x) + b
 
 
-Ev0 = 0 # valore errore del generatore
+Ev0 = 0.01/np.sqrt(3)  # valore errore del generatore
 Amperaggio = [7, 8, 9, 10, 11, 12, 14, 17, 21, 28, 29, 30, 31, 32, 33, 34, 36, 37, 39, 40]  # milliamp
 Amperaggio = np.array(Amperaggio)*0.001
 Voltaggio = [8.21, 8.05, 7.86, 7.64, 7.36, 7.0, 6.52, 5.87, 4.91, 3.363, 3.145, 2.92, 2.679, 2.422, 2.146, 1.85, 1.53,
@@ -39,8 +39,8 @@ plt.show()
 # I valori predetti dal teorema di thevenin per il primo punto sono:
 Vt1 = 10  # Volt
 # 0) tdc con il valore nominale del generatore
-TDC00 = moduloanalisi.tdc(Vt1, popt[1], 0, pcov[0][0])
-print("Il valore dato dal tdc con il valore nominale del voltaggio è: " + str(TDC00))
+TDC00 = moduloanalisi.tdc(Vt1, popt[1], Ev0, pcov[0][0])
+print("Il valore dato dal tdc con il valore letto dal generatore di voltaggio è: " + str(TDC00))
 
 # Poi le resistenze sono dispiegate nei seguenti casi:
 

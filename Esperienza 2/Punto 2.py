@@ -29,7 +29,7 @@ EV0 = 0.01 / np.sqrt(3)
 Vn = [15.96, 7.92, 3.96, 1.98, 0.99]
 Nstadi = [1, 2, 3, 4, 5]
 
-ErrVn = mm.incertezzadigitale(1, np.array(Vn), 3, 0.01)
+ErrVn = mm.incertezzadigitale(0.8, np.array(Vn), 1, 0.001)
 
 
 def line(x, a, b):

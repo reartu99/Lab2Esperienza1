@@ -5,6 +5,11 @@ import moduloanalisi as mm
 import numpy as np
 import scipy as sp
 
+
+def line(x, a, b):
+    return a * np.array(x) + b
+
+
 V0 = 16
 R1_valore = 100.3
 R2_valore = 2*R1_valore
@@ -26,9 +31,6 @@ Nstadi = [1,2,3,4,5]
 
 ErrVn = mm.incertezzadigitale(1, np.array(Vn), 3, 0.01)
 
-def line(x, a, b):
-    return a * np.array(x) + b
-
 
 # Crea il grafico a dispersione (scatter plot) dei dati
 plt.scatter(Nstadi, Vn, label='Dati', color='b', marker='o')
@@ -47,7 +49,7 @@ print(popt, pcov)
 plt.plot(Nstadi, line(Nstadi, popt[0], popt[1]))
 plt.show()
 
-TDC1 = moduloanalisi.tdc(popt[0],Alfa ,pcov[0][0], Ealfa)
+TDC1 = moduloanalisi.tdc(popt[0], Alfa, pcov[0][0], Ealfa)
 print(TDC1)
-TDC2 = moduloanalisi.tdc(popt[1],V0,pcov[1][1], EV0)
+TDC2 = moduloanalisi.tdc(popt[1], V0, pcov[1][1], EV0)
 print(TDC2)
